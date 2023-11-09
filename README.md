@@ -1,8 +1,13 @@
-# Getting Started with Create React App
+# Error Boundaries in React
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is simple typescript react app designed to facilitate learning about error boundaries. Specifically, 
+using error boundaries to build a more fault-tolerant app. 
 
 ## Available Scripts
+
+### Installing the project
+
+`npm install` will download the necessary dependencies.
 
 In the project directory, you can run:
 
@@ -14,33 +19,40 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-### `npm test`
+## Important Files
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- The ErrorBoundary component is [here](src/ErrorBoundary.tsx)
+- The Checkout component is [here](src/components/Checkout.tsx)
+- The App is loaded [here](src/App.tsx)
+- The OrderBump component is [here](src/components/Bumps.tsx)
 
-### `npm run build`
+## The Error Boundary Component
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+This component is structured to catch error that occur within child components of the boundary. 
+It requires a `fallback` prop that is rendered when an error occurs. 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Observing the ErrorBoundary in action.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+_NOTE: you may need to stop/start the development server to see changes to error handling as the `<ErrorBoundary>`
+tags are adjusted._
 
-### `npm run eject`
+## Throwing and error
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Uncomment the thrown error in the [OrderBump component](src/components/Bumps.tsx) on line 38.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### 1. A boundary around the entire app
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+As a first pass, go to the [App.tsx](src/App.tsx) and uncomment the `<ErrorBoundary>` component that surrounds the
+entire component tree. 
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### 2. A boundary around the checkout component
 
-## Learn More
+In [App.tsx](src/App.tsx), comment out the `<ErrorBoundary>` component surrounding the entire tree and uncomment the
+`<ErrorBoundary>` that surrounds `<Checkout />` component.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 3. A boundary around the OrderBump component
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Finally, make sure all `<ErrorBoundary>` components are commented out in [App.tsx](src/App.tsx). Then go to the
+[Checkout component](src/components/Checkout.tsx) and uncomment the `<ErrorBoundary>` surrounding the 
+`<Bumps>` component
+
