@@ -36,21 +36,21 @@ It requires a `fallback` prop that is rendered when an error occurs.
 _NOTE: you may need to stop/start the development server to see changes to error handling as the `<ErrorBoundary>`
 tags are adjusted._
 
-## Throwing and error
+### Throwing and error
 
 Uncomment the thrown error in the [OrderBump component](src/components/Bumps.tsx) on line 38.
 
-### 1. A boundary around the entire app
+## 1. A boundary around the entire app
 
 As a first pass, go to the [App.tsx](src/App.tsx) and uncomment the `<ErrorBoundary>` component that surrounds the
 entire component tree. 
 
-### 2. A boundary around the checkout component
+## 2. A boundary around the checkout component
 
 In [App.tsx](src/App.tsx), comment out the `<ErrorBoundary>` component surrounding the entire tree and uncomment the
 `<ErrorBoundary>` that surrounds `<Checkout />` component.
 
-### 3. A boundary around the OrderBump component
+## 3. A boundary around the OrderBump component
 
 Finally, make sure all `<ErrorBoundary>` components are commented out in [App.tsx](src/App.tsx). Then go to the
 [Checkout component](src/components/Checkout.tsx) and uncomment the `<ErrorBoundary>` surrounding the 
