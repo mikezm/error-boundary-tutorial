@@ -11,7 +11,8 @@ using error boundaries to build a more fault-tolerant app.
 
 In the project directory, you can run:
 
-### `npm start`
+### Running the development server
+`npm start`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
