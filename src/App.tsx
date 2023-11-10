@@ -11,6 +11,7 @@ import '@fontsource/roboto/700.css';
 import Checkout from "./components/Checkout";
 import CssBaseline from '@mui/material/CssBaseline';
 import ErrorBoundary from "./ErrorBoundary";
+import {borderStyle} from "./components/styles";
 function App() {
 
     const darkTheme = createTheme({
@@ -23,11 +24,12 @@ function App() {
         // <ErrorBoundary fallback={<h1>The entire page is broken</h1>}>
             <ThemeProvider theme={darkTheme}>
                 <CssBaseline />
-                <Container maxWidth="md">
+                <Container maxWidth="lg" style={{...borderStyle, backgroundColor: '#282c34'}}>
                     <header className="app-header">
-                        <h3>
-                            An app designed to learn more about Error Boundaries.
-                        </h3>
+                        <h2>EB-Checkout</h2>
+                        <p>
+                            Exploring Error Boundaries
+                        </p>
                     </header>
                     {/*<ErrorBoundary fallback={<h1>The Checkout is broken</h1>}>*/}
                         <Checkout />
