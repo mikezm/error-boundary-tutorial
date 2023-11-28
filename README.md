@@ -1,6 +1,7 @@
 # Exploring Error Boundaries
 
-This TypeScript React application aims to simplify the understanding of error boundaries, emphasizing their use in creating a more resilient application. 
+This TypeScript React application aims to simplify the understanding of error boundaries, emphasizing their use in 
+creating a more resilient application. 
 
 Error boundaries can wrap sections of your component tree, intercepting errors thrown by child components. This enables 
 us to manage errors gracefully. If your goal is solely to log errors to a service, a single boundary encompassing the 
@@ -60,19 +61,50 @@ tags are adjusted._
 
 Uncomment the thrown error in the [CartItems](src/components/CartItems.tsx) component on line 47.
 
-## Phase 1 - A boundary around the entire app
+# Testing Error Boundaries in different locations
+
+The following steps, when taken individually, will demonstrate how using the `<ErrorBoundary>` component in different
+places allows for more granular handling of rendering errors. 
+
+
+## Step 1 - A boundary around the entire app
 
 As a first pass, go to the [App.tsx](src/App.tsx) and uncomment the `<ErrorBoundary>` component that surrounds the
 entire component tree. 
 
-## Phase 2 - A boundary around the checkout component
+Throw an error by uncommenting the error in the [CartItems](src/components/CartItems.tsx) component on line 47.
+
+If we only want to log errors to a third-party service this might work just fine. But for fault-tolerance, this offers
+no additional benefit. If an error is thrown anywhere in the app, the entire page is still "broken," for all intents
+and purposes.
+
+## Step 2 - A boundary around the checkout component
 
 In [App.tsx](src/App.tsx), comment out the `<ErrorBoundary>` component surrounding the entire tree and uncomment the
 `<ErrorBoundary>` that surrounds `<Checkout />` component.
 
-## Phase 3 - A boundary around the CartItems component
+Throw an error by uncommenting the error in the [CartItems](src/components/CartItems.tsx) component on line 47.
+
+In this step, we get a bit closer to improved fault-tolerance. Now, our application can still load the page title, but 
+any error thrown withing our `<Checkout />` component will cause the entire page to fail. Put another way, if something 
+fails within our `<CartItems>` component, we won't show any of the `<Checkout />` component.
+
+Ultimately, this is a decision we might choose to make for our customers. If CartItems are critical to the purchase of 
+any product on our Checkout page, we can opt to fail gracefully while keeping the rest of the page working as intended.
+Though, of course, in this simple example, there is little else but the page title. 
+
+## Step 3 - A boundary around the CartItems component
 
 Finally, make sure all `<ErrorBoundary>` components are commented out in [App.tsx](src/App.tsx). Then go to the
-[Checkout component](src/components/Checkout.tsx) and uncomment the `<ErrorBoundary>` surrounding the 
-`<CartItems>` component
+[Checkout component](src/components/Checkout.tsx) and uncomment the `<ErrorBoundary>` surrounding the following code:
+```jsx
+<CartItems onBumpSelect={handleBumpChange}/>
+```
+
+In this scenario, we ensure that customers can still complete a purchase of the primary item even when 
+add-on CartItems are unavailable in the Checkout page. Ideally, we want everything to work, but now we can still sell 
+one product even when add-on CartItems break for some unforeseen reason.  
+
+
+
 
